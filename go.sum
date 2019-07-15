@@ -16,10 +16,14 @@ github.com/go-godin/grpc-metadata v0.0.0-20190712125359-5435d420192d h1:MLzGvYz/
 github.com/go-godin/grpc-metadata v0.0.0-20190712125359-5435d420192d/go.mod h1:8l5js6oXPPupjhdJrmYVaJuidrUyr+Q3V75iZJAZ974=
 github.com/go-godin/grpc-metadata v0.0.0-20190712125646-04ceb265ac8a h1:H6PV/RmEFBiimzeI9UbaziI4xNTEaSLHGmbYKp+wsJk=
 github.com/go-godin/grpc-metadata v0.0.0-20190712125646-04ceb265ac8a/go.mod h1:8l5js6oXPPupjhdJrmYVaJuidrUyr+Q3V75iZJAZ974=
+github.com/go-godin/log v0.0.0-20190712151708-ebfdb407f47f h1:4E0B1BxHnQWufUumX1pL8v3RETyZWCP+Qp8/+JiR/1U=
+github.com/go-godin/log v0.0.0-20190712151708-ebfdb407f47f/go.mod h1:foeoqZOKhUxkgzb1i/Mn7DPj+3/NKFuLCBN1DxFhv8Y=
 github.com/go-kit/kit v0.8.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
 github.com/go-kit/kit v0.9.0 h1:wDJmvq38kDhkVxi50ni9ykkdUr1PKgqKOoi01fa0Mdk=
 github.com/go-kit/kit v0.9.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
 github.com/go-logfmt/logfmt v0.3.0/go.mod h1:Qt1PoO58o5twSAckw1HlFXLmHsOX5/0LbT9GBnD5lWE=
+github.com/go-logfmt/logfmt v0.4.0 h1:MP4Eh7ZCb31lleYCFuwm0oe4/YGak+5l1vA2NOE80nA=
+github.com/go-logfmt/logfmt v0.4.0/go.mod h1:3RMwSq7FuexP4Kalkev3ejPJsZTpXXBr9+V4qmtdjCk=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
