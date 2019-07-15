@@ -22,6 +22,11 @@ var requestsCurrent = prometheus.NewGaugeFrom(stdprometheus.GaugeOpts{
 	Help: "The current number of gRPC requests by endpoint",
 }, []string{"method"})
 
+var amqpInbound = prometheus.NewGaugeFrom(stdprometheus.GaugeOpts{
+	Name: "amqp_inbound",
+	Help: "Increased on incoming message, decreased on ack/nack",
+}, []string{"routing_key"})
+
 var requestStatus = prometheus.NewCounterFrom(stdprometheus.CounterOpts{
 	Name: "endpoint_requests_total",
 	Help: "The total number of gRPC requests and whether the business failed or not",
@@ -38,6 +43,20 @@ func Prometheus(methodName string) endpoint.Middleware {
 				requestDuration.With("method", methodName).Observe(time.Since(begin).Seconds())
 				requestsCurrent.With("method", methodName).Add(-1)
 				requestStatus.With("method", methodName, "success", fmt.Sprint(err == nil))
+			}(time.Now())
+
+			return next(ctx, request)
+		}
+	}
+}
+
+func InstrumentRabbitMQ(topic string) endpoint.Middleware {
+	return func(next endpoint.Endpoint) endpoint.Endpoint {
+		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
+			amqpInbound.With("routing_key", topic).Add(1)
+
+			defer func(begin time.Time) {
+				amqpInbound.With("routing_key", topic).Add(-1)
 			}(time.Now())
 
 			return next(ctx, request)
