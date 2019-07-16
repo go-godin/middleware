@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"context"
-	"github.com/sirupsen/logrus"
 	"time"
 
 	"fmt"
