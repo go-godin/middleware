@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"github.com/sirupsen/logrus"
 	"time"
 
 	"fmt"
@@ -22,15 +23,20 @@ var requestsCurrent = prometheus.NewGaugeFrom(stdprometheus.GaugeOpts{
 	Help: "The current number of gRPC requests by endpoint",
 }, []string{"method"})
 
+var requestStatus = prometheus.NewCounterFrom(stdprometheus.CounterOpts{
+	Name: "endpoint_requests_total",
+	Help: "The total number of gRPC requests and whether the business failed or not",
+}, []string{"method", "success"})
+
 var amqpInbound = prometheus.NewGaugeFrom(stdprometheus.GaugeOpts{
 	Name: "amqp_inbound",
 	Help: "Increased on incoming message, decreased on ack/nack",
 }, []string{"routing_key"})
 
-var requestStatus = prometheus.NewCounterFrom(stdprometheus.CounterOpts{
-	Name: "endpoint_requests_total",
-	Help: "The total number of gRPC requests and whether the business failed or not",
-}, []string{"method", "success"})
+var amqpTransportError = prometheus.NewCounterFrom(stdprometheus.CounterOpts{
+	Name: "amqp_transport_error",
+	Help: "Increased when a message could not be decoded or necessary content is missing",
+}, []string{"routing_key"})
 
 // Prometheus adds basic RED metrics on all endpoints. The transport layer (gRPC, AMQP, HTTP, ...) should also have metrics attached and
 // will then take care of monitoring gRPC endpoints including their status.
@@ -57,6 +63,9 @@ func InstrumentRabbitMQ(topic string) endpoint.Middleware {
 
 			defer func(begin time.Time) {
 				amqpInbound.With("routing_key", topic).Add(-1)
+				if err != nil {
+					amqpTransportError.With("routing_key", topic).Add(1)
+				}
 			}(time.Now())
 
 			return next(ctx, request)

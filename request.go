@@ -3,21 +3,28 @@ package middleware
 import (
 	"context"
 	"github.com/google/uuid"
-	grpcMetadata "google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/metadata"
 
-	metadata "github.com/go-godin/grpc-metadata"
+	md2 "github.com/go-godin/grpc-metadata"
 	"github.com/go-kit/kit/endpoint"
 )
 
-func RequestIDMiddleware() endpoint.Middleware {
+func RequestID() endpoint.Middleware {
 	return func(next endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
-			requestID := metadata.GetRequestID(ctx)
 
-			// add the requestId to ctx if missing
-			if requestID == "" {
-				ctx = grpcMetadata.AppendToOutgoingContext(ctx, string(metadata.RequestID), uuid.New().String())
+			if md, ok := metadata.FromIncomingContext(ctx); ok {
+				requestID := md.Get(string(md2.RequestID))
+				if len(requestID) > 0 {
+					return next(ctx, request)
+				}
+
+				md.Append(string(md2.RequestID), uuid.New().String())
+				ctx = metadata.NewIncomingContext(ctx, md)
+				return next(ctx, request)
 			}
+
+			ctx = metadata.NewIncomingContext(ctx, metadata.Pairs(string(md2.RequestID), uuid.New().String()))
 
 			return next(ctx, request)
 		}
