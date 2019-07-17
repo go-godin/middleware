@@ -6,7 +6,6 @@ import (
 	"github.com/go-godin/rabbitmq"
 	"github.com/go-kit/kit/metrics/prometheus"
 	stdprometheus "github.com/prometheus/client_golang/prometheus"
-	"github.com/streadway/amqp"
 )
 
 var amqpInbound = prometheus.NewGaugeFrom(stdprometheus.GaugeOpts{
@@ -15,7 +14,7 @@ var amqpInbound = prometheus.NewGaugeFrom(stdprometheus.GaugeOpts{
 }, []string{"routing_key"})
 
 func PrometheusInstrumentation(routingKey string, handler rabbitmq.SubscriptionHandler) rabbitmq.SubscriptionHandler {
-	return func(ctx context.Context, delivery *amqp.Delivery) {
+	return func(ctx context.Context, delivery *rabbitmq.Delivery) {
 		amqpInbound.With("routing_key", routingKey).Add(1)
 
 		defer func() {

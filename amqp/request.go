@@ -6,11 +6,10 @@ import (
 	grpc_metadata "github.com/go-godin/grpc-metadata"
 	"github.com/go-godin/rabbitmq"
 	"github.com/google/uuid"
-	"github.com/streadway/amqp"
 )
 
 func RequestID(handler rabbitmq.SubscriptionHandler) rabbitmq.SubscriptionHandler {
-	return func(ctx context.Context, delivery *amqp.Delivery) {
+	return func(ctx context.Context, delivery *rabbitmq.Delivery) {
 		reqId := delivery.Headers[string(grpc_metadata.RequestID)]
 
 		if reqId == nil {

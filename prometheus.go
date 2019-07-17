@@ -27,11 +27,6 @@ var requestStatus = prometheus.NewCounterFrom(stdprometheus.CounterOpts{
 	Help: "The total number of gRPC requests and whether the business failed or not",
 }, []string{"method", "success"})
 
-var amqpTransportError = prometheus.NewCounterFrom(stdprometheus.CounterOpts{
-	Name: "amqp_transport_error",
-	Help: "Increased when a message could not be decoded or necessary content is missing",
-}, []string{"routing_key"})
-
 // InstrumentGRPC adds basic RED metrics on all endpoints. The transport layer (gRPC, AMQP, HTTP, ...) should also have metrics attached and
 // will then take care of monitoring gRPC endpoints including their status.
 func InstrumentGRPC(methodName string) endpoint.Middleware {
