@@ -20,6 +20,8 @@ github.com/go-godin/rabbitmq v0.0.0-20190716184320-52a731630391 h1:IiRzS4TQxTzl3
 github.com/go-godin/rabbitmq v0.0.0-20190716184320-52a731630391/go.mod h1:RC4VtaodR+xZa0/+CDeM1cXCSmkxnOYKvtDntFA4lIw=
 github.com/go-godin/rabbitmq v0.0.0-20190717073734-15995f2da5b2 h1:Ixpx+kjAVOfIsZd+V55tCV/DaGxZqlCIA65GNvs65OQ=
 github.com/go-godin/rabbitmq v0.0.0-20190717073734-15995f2da5b2/go.mod h1:fO91iywDopq8wdK/EDvQkIXf1pmZBgEgI7Mkg+tiFVc=
+github.com/go-godin/rabbitmq v0.0.0-20190717074815-2a37ca6d6428 h1:i0jRrHiKVPq9mTEXdhR5DY0B4enu1Ma3ZBxEfDEwQt8=
+github.com/go-godin/rabbitmq v0.0.0-20190717074815-2a37ca6d6428/go.mod h1:fO91iywDopq8wdK/EDvQkIXf1pmZBgEgI7Mkg+tiFVc=
 github.com/go-kit/kit v0.8.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
 github.com/go-kit/kit v0.9.0 h1:wDJmvq38kDhkVxi50ni9ykkdUr1PKgqKOoi01fa0Mdk=
 github.com/go-kit/kit v0.9.0/go.mod h1:xBxKIO96dXMWWy0MnWVtmwkA9/13aqxPnvrjFYMA2as=
