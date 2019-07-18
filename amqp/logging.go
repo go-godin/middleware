@@ -14,10 +14,11 @@ import (
 func Logging(logger log.Logger, routingKey string, handler rabbitmq.SubscriptionHandler) rabbitmq.SubscriptionHandler {
 	return func(ctx context.Context, delivery *rabbitmq.Delivery) {
 		logger.Info(
-			"incoming AMQP message",
+			"consume message",
 			"routing_key", routingKey,
 			"redelivered", fmt.Sprint(delivery.Redelivered),
-			"requestId", ctx.Value(string(grpc_metadata.RequestID)),
+			"requestId", grpc_metadata.GetRequestID(ctx),
+			"transport", "amqp",
 		)
 
 		handler(ctx, delivery)
