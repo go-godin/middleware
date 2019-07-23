@@ -22,7 +22,8 @@ func RequestID() endpoint.Middleware {
 					return next(ctx, request)
 				}
 
-				md.Append(string(md2.RequestID), uuid.New().String())
+				id := uuid.New().String()
+				md.Append(string(md2.RequestID), id)
 				ctx = metadata.NewIncomingContext(ctx, md)
 				ctx = context.WithValue(ctx, "requestId", requestID)
 				return next(ctx, request)
