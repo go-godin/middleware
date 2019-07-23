@@ -18,16 +18,20 @@ func RequestID() endpoint.Middleware {
 			if md, ok := metadata.FromIncomingContext(ctx); ok {
 				requestID := md.Get(string(md2.RequestID))
 				if len(requestID) > 0 {
+					ctx = context.WithValue(ctx, "requestId", requestID)
 					return next(ctx, request)
 				}
 
 				md.Append(string(md2.RequestID), uuid.New().String())
 				ctx = metadata.NewIncomingContext(ctx, md)
+				ctx = context.WithValue(ctx, "requestId", requestID)
 				return next(ctx, request)
 			}
 
 			// no metadata or context, at least ensure the requestId exists
-			ctx = metadata.NewIncomingContext(ctx, metadata.Pairs(string(md2.RequestID), uuid.New().String()))
+			requestID := uuid.New().String()
+			ctx = metadata.NewIncomingContext(ctx, metadata.Pairs(string(md2.RequestID), requestID))
+			ctx = context.WithValue(ctx, "requestId", requestID)
 			return next(ctx, request)
 		}
 	}
