@@ -14,7 +14,7 @@ func Logging(logger log.Logger, endpointName string) endpoint.Middleware {
 	return func(next endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 			defer func(begin time.Time) {
-				logger.Info("endoint finished",
+				logger.Info("outgoing response",
 					"endpoint", endpointName,
 					"took", time.Since(begin),
 					"requestId", grpc_metadata.GetRequestID(ctx),
